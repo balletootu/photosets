@@ -19,7 +19,7 @@ def scale(imgPath):
 		print('saved => %s' % '.'.join(arr))
 
 if __name__ == '__main__':
-	for parent, dirnames, filenames in os.walk(r'E:\apowo\Root\RootAdmin\tools\photos\imgs\0uploaded\FemJoy – Fedra – Everything'.decode('utf-8')):
+	for parent, dirnames, filenames in os.walk(r'G:\adultphotosets\imgs\Hegre-Art – Anaya – Introduction\Hegre-Art – Anaya – Introduction'.decode('utf-8')):
 		for filename in filenames:
 			if filename.endswith('jpg'):
 				scale(os.path.join(parent, filename))

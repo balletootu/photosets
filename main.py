@@ -8,13 +8,15 @@ BASE_URL = 'http://adultphotosets.ru'
 
 def fetchLargeImageUrl(imgUrl):
 	if not imgUrl.endswith('zip'):
-		if 'imagehosting.pro' in imgUrl or 'gif-jpg.com' in imgUrl:
+		if 'imagehosting.pro' in imgUrl or 'gif-jpg.com' in imgUrl or 'ipics.info' in imgUrl:
 			pq = helper.get(imgUrl)
 			img = pq('img.centred')
 			url = img.attr('src')
 			if not url:
 				img = pq('img.centred_resized')
 				url = img.attr('src')
+			if url == None:
+				return ''
 			return url
 		elif 'img.yt' in imgUrl or 'imgcandy.net' in imgUrl:
 			pq = helper.post(imgUrl)
@@ -45,6 +47,9 @@ def fetchLargeImageUrl(imgUrl):
 			pq = helper.get(imgUrl)
 			img = pq('img.pic')
 			return img.attr('src')
+		elif 'addimage.info' in imgUrl:
+			print('addimage.info is over!!!')
+			return ''
 		else:
 			print('unknow image url => %s' % imgUrl)
 			return None
@@ -65,9 +70,14 @@ def fetchGallery(url, page):
 		print('exists!!! skip!')
 		return True
 
+	dirName = os.path.join('imgs', '0error', title)
+	if os.path.exists(dirName):
+		print('exists!!! skip!')
+		return True
+
 	# 创建本地目录
 	dirName = os.path.join('imgs', title)
-	print('make dir %s' % dirName)
+	# print('make dir %s' % dirName)
 	# 如果存在url.txt，说明这个相册已经抓取过了，直接return吧
 	if os.path.exists('%s/url.txt' % dirName):
 		print('exists!!! skip!')
@@ -111,8 +121,8 @@ def fetchPage(page):
 	return True
 
 if __name__ == '__main__':
-	# page: 49
-	for page in xrange(49, 224):
+	# page: 81
+	for page in xrange(81, 224):
 		if not fetchPage(page):
 			break
 
