@@ -121,8 +121,8 @@ def fetchPage(page):
 	return True
 
 if __name__ == '__main__':
-	# page: 81
-	for page in xrange(81, 224):
+	# page: 82
+	for page in xrange(82, 224):
 		if not fetchPage(page):
 			break
 
