@@ -19,6 +19,8 @@ def fetchLargeImageUrl(imgUrl):
 				return ''
 			return url
 		elif 'img.yt' in imgUrl or 'imgcandy.net' in imgUrl:
+			if 'img.yt' in imgUrl:
+				imgUrl = imgUrl.replace('http:', 'https:')
 			pq = helper.post(imgUrl)
 			img = pq('img.centred')
 			return img.attr('src')
@@ -121,8 +123,8 @@ def fetchPage(page):
 	return True
 
 if __name__ == '__main__':
-	# page: 82
-	for page in xrange(82, 224):
+	# page: 94
+	for page in xrange(94, 224):
 		if not fetchPage(page):
 			break
 
