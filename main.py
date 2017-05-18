@@ -97,6 +97,8 @@ def fetchGallery(url, page):
 				arr = re.compile(r'http://imgtrex\.com/\w+/[a-z0-9-]+\.jpg').findall(pq.html())
 				if len(arr) == 0:
 					print('can\'t find any <a>')
+					if url == 'http://adultphotosets.ru/met-art-lupita-gifera/':
+						return True
 					return False
 				aArr = [{'href': a} for a in arr]
 				# for a in arr:
@@ -115,12 +117,13 @@ def fetchGallery(url, page):
 		print('%s image index => %d' % (helper.now(), i))
 		url = fetchLargeImageUrl(a.get('href'), tag)
 		if url == None:
-			print('fetchLargeImageUrl failed')
-			return False
+			if i == 0:
+				print('fetchLargeImageUrl failed')
+				return False
 		else:
 			if url <> '':
 				imgUrl.append(url)
-			i += 1
+		i += 1
 	if len(imgUrl) > 0:
 		helper.writeFile('\n'.join(imgUrl), '%s/url.txt' % dirName)
 	return True
@@ -134,7 +137,7 @@ def fetchPage(page):
 	return True
 
 if __name__ == '__main__':
-	# page: 165
-	for page in xrange(165, 233):
+	# page: 178
+	for page in xrange(178, 233):
 		if not fetchPage(page):
 			break
