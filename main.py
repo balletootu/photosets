@@ -6,7 +6,7 @@ import re, os, Queue, threading
 
 BASE_URL = 'http://adultphotosets.ru'
 
-def fetchLargeImageUrl(imgUrl):
+def fetchLargeImageUrl(imgUrl, tag):
 	if not imgUrl.endswith('zip'):
 		if 'imagehosting.pro' in imgUrl or 'gif-jpg.com' in imgUrl or 'ipics.info' in imgUrl:
 			pq = helper.get(imgUrl)
@@ -33,7 +33,7 @@ def fetchLargeImageUrl(imgUrl):
 			
 			# http://imgchili.net/show/102747/102747596__sexart_raddia_cover.jpg
 			# http://i11.imgchili.net/102747/102747596__sexart_raddia_cover.jpg
-			url = imgUrl.replace('//imgchili', '//i11.imgchili').replace('show/', '')
+			url = imgUrl.replace('//imgchili', '//i%s.imgchili' % tag).replace('show/', '')
 			return url
 		elif 'imagetwist.com' in imgUrl:
 			pq = helper.get(imgUrl)
@@ -71,7 +71,6 @@ def fetchGallery(url, page):
 	if os.path.exists(dirName):
 		print('exists!!! skip!')
 		return True
-
 	dirName = os.path.join('imgs', '0error', title)
 	if os.path.exists(dirName):
 		print('exists!!! skip!')
@@ -86,6 +85,7 @@ def fetchGallery(url, page):
 		return True
 	helper.mkDir(dirName)
 	i = 0
+	tag = None
 	imgUrl = []
 	aArr = pq('a.externalLink')
 	if not aArr or len(aArr) < 1:
@@ -99,10 +99,16 @@ def fetchGallery(url, page):
 			aArr = [{'href': a} for a in arr]
 			# for a in arr:
 			# 	aArr.append({'href': a})
-	
+			
+		if aArr and len(aArr) > 0:
+			if 'imgchili.net' in aArr[0].get('href'):
+				imgArr = pq('div.content>p>a>img')
+				# http://t10.imgchili
+				tag = imgArr[0].get('src').replace('http://', '').split('.imgchili')[0].replace('t', '')
+
 	for a in aArr:
 		print('%s image index => %d' % (helper.now(), i))
-		url = fetchLargeImageUrl(a.get('href'))
+		url = fetchLargeImageUrl(a.get('href'), tag)
 		if url == None:
 			print('fetchLargeImageUrl failed')
 			return False
@@ -123,13 +129,7 @@ def fetchPage(page):
 	return True
 
 if __name__ == '__main__':
-	# page: 121
-	for page in xrange(121, 224):
+	# page: 131
+	for page in xrange(131, 233):
 		if not fetchPage(page):
 			break
-
-	# print fetchLargeImageUrl('http://imgtrex.com/1hveh08jcjk7/cover.jpg')
-	# 
-	# http://i11.imgchili.net/89928/89928089__cindy_beauty_treatment_poste.jpg
-	# http://imgchili.net/show/89928/89928089__cindy_beauty_treatment_poste.jpg
-	# http://i6.imgchili.net/89928/89928089__cindy_beauty_treatment_poste.jpg
