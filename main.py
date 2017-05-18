@@ -123,9 +123,13 @@ def fetchPage(page):
 	return True
 
 if __name__ == '__main__':
-	# page: 94
-	for page in xrange(94, 224):
+	# page: 120
+	for page in xrange(120, 224):
 		if not fetchPage(page):
 			break
 
 	# print fetchLargeImageUrl('http://imgtrex.com/1hveh08jcjk7/cover.jpg')
+	# 
+	# http://i11.imgchili.net/89928/89928089__cindy_beauty_treatment_poste.jpg
+	# http://imgchili.net/show/89928/89928089__cindy_beauty_treatment_poste.jpg
+	# http://i6.imgchili.net/89928/89928089__cindy_beauty_treatment_poste.jpg
