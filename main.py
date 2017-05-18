@@ -91,20 +91,25 @@ def fetchGallery(url, page):
 	if not aArr or len(aArr) < 1:
 		aArr = pq('div.content>p>a')
 		if not aArr or len(aArr) < 1:
-			# http://imgtrex.com/8kbfdzphqsr1/daniela-dressed-for-sex-02-10000px
-			arr = re.compile(r'http://imgtrex\.com/\w+/[a-z0-9-]+\.jpg').findall(pq.html())
-			if len(arr) == 0:
-				print('can\'t find any <a>')
-				return False
-			aArr = [{'href': a} for a in arr]
-			# for a in arr:
-			# 	aArr.append({'href': a})
+			aArr = pq('div.content>a')
+			if not aArr or len(aArr) < 1:
+				# http://imgtrex.com/8kbfdzphqsr1/daniela-dressed-for-sex-02-10000px
+				arr = re.compile(r'http://imgtrex\.com/\w+/[a-z0-9-]+\.jpg').findall(pq.html())
+				if len(arr) == 0:
+					print('can\'t find any <a>')
+					return False
+				aArr = [{'href': a} for a in arr]
+				# for a in arr:
+				# 	aArr.append({'href': a})
 			
 		if aArr and len(aArr) > 0:
 			if 'imgchili.net' in aArr[0].get('href'):
 				imgArr = pq('div.content>p>a>img')
+				if not imgArr or len(imgArr) < 1:
+					imgArr = pq('div.content>a>img')
 				# http://t10.imgchili
-				tag = imgArr[0].get('src').replace('http://', '').split('.imgchili')[0].replace('t', '')
+				if imgArr and len(imgArr) > 0:
+					tag = imgArr[0].get('src').replace('http://', '').split('.imgchili')[0].replace('t', '')
 
 	for a in aArr:
 		print('%s image index => %d' % (helper.now(), i))
@@ -129,7 +134,7 @@ def fetchPage(page):
 	return True
 
 if __name__ == '__main__':
-	# page: 131
-	for page in xrange(131, 233):
+	# page: 162
+	for page in xrange(162, 233):
 		if not fetchPage(page):
 			break

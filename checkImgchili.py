@@ -103,55 +103,55 @@ def fetchGallery(url):
 		helper.writeFile('\n'.join(imgUrl), '%s/url.txt' % dirName)
 	return title
 
-if __name__ == '__main__':
-	b = False
-	repaire_file_arr = []
-	error_dir = os.path.join('imgs', '0error')
-	for parent, dirnames, filenames in os.walk(error_dir):
-		# print parent
-		for filename in filenames:
-			if filename.endswith('txt'):
-				url_txt_path = os.path.join(parent, filename)
-				f = open(url_txt_path)
-				url_txt = f.read()
-				f.close()
-
-				if 'imgchili' in url_txt:
-					# repaire_file_arr.append(url_txt_path)
-					tmpArr = url_txt_path.replace('imgs\\0error\\', '').replace('\\url.txt', '').replace('&', '-').split(' ')
-					tmpArr1 = []
-					for ss in tmpArr:
-						if re.match(r'\w+', ss):
-							tmpArr1.append(ss)
-					title = fetchGallery('http://adultphotosets.ru/%s' % '-'.join(tmpArr1))
-					if title:
-						print os.path.join('imgs', title)
-						shutil.move(os.path.join('imgs', '0error', title), os.path.join('imgs', title))
-						b = True
-						break
-		if b :
-			break
-
-
 # if __name__ == '__main__':
-# 	arr = []
-# 	dirName = os.path.join('imgs')
-# 	for parent, dirNames, fileNames in os.walk(dirName):
-# 		for dirName in dirNames:
-# 			if '0baidu' in parent or '0error' in parent or '0upload' in parent:
-# 				continue
-# 			if dirName == '0baidu' or dirName == '0error' or dirName == '0upload':
-# 				continue
-# 			urlTxtPath = os.path.join(parent, dirName, 'url.txt')
-# 			if not os.path.exists(urlTxtPath):
-# 				arr.append(dirName)
-# 			else:
-# 				f = open(urlTxtPath)
-# 				urlTextContent = f.read()
+# 	b = False
+# 	repaire_file_arr = []
+# 	error_dir = os.path.join('imgs', '0error')
+# 	for parent, dirnames, filenames in os.walk(error_dir):
+# 		# print parent
+# 		for filename in filenames:
+# 			if filename.endswith('txt'):
+# 				url_txt_path = os.path.join(parent, filename)
+# 				f = open(url_txt_path)
+# 				url_txt = f.read()
 # 				f.close()
-# 				if 'imgchili' in urlTextContent:
-# 					arr.append(dirName)
-# 	# print arr
-# 	for a in arr:
-# 		print(os.path.join('imgs', a), os.path.join('imgs', '0error', a))
-# 		shutil.move(os.path.join('imgs', a), os.path.join('imgs', '0error', a))
+
+# 				if 'imgchili' in url_txt:
+# 					# repaire_file_arr.append(url_txt_path)
+# 					tmpArr = url_txt_path.replace('imgs\\0error\\', '').replace('\\url.txt', '').replace('&', '-').split(' ')
+# 					tmpArr1 = []
+# 					for ss in tmpArr:
+# 						if re.match(r'\w+', ss):
+# 							tmpArr1.append(ss)
+# 					title = fetchGallery('http://adultphotosets.ru/%s' % '-'.join(tmpArr1))
+# 					if title:
+# 						print os.path.join('imgs', title)
+# 						shutil.move(os.path.join('imgs', '0error', title), os.path.join('imgs', title))
+# 						b = True
+# 						break
+# 		if b :
+# 			break
+
+
+if __name__ == '__main__':
+	arr = []
+	dirName = os.path.join('imgs')
+	for parent, dirNames, fileNames in os.walk(dirName):
+		for dirName in dirNames:
+			if '0baidu' in parent or '0error' in parent or '0upload' in parent:
+				continue
+			if dirName == '0baidu' or dirName == '0error' or dirName == '0uploaded':
+				continue
+			urlTxtPath = os.path.join(parent, dirName, 'url.txt')
+			if not os.path.exists(urlTxtPath):
+				arr.append(dirName)
+			else:
+				f = open(urlTxtPath)
+				urlTextContent = f.read()
+				f.close()
+				if 'imgchili' in urlTextContent:
+					arr.append(dirName)
+	# print arr
+	for a in arr:
+		print(os.path.join('imgs', a), os.path.join('imgs', '0error', a))
+		shutil.move(os.path.join('imgs', a), os.path.join('imgs', '0error', a))

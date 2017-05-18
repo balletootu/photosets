@@ -14,11 +14,14 @@ def scale(imgPath):
 		# 把缩放后的图像用jpeg格式保存:
 		arr = imgPath.split('.')
 		arr.insert(-1, 's')
-		im.save('.'.join(arr), 'jpeg')
+		try:
+			im.save('.'.join(arr), 'jpeg')
+		except Exception as e:
+			pass
 		print('saved => %s' % '.'.join(arr))
 
 if __name__ == '__main__':
-	for parent, dirnames, filenames in os.walk(r'G:\adultphotosets\imgs\Hegre-Art – Clarice – Session In Bed'.decode('utf-8')):
+	for parent, dirnames, filenames in os.walk(r'G:\adultphotosets\imgs\Hegre-Art – Emma – Nude Art'.decode('utf-8')):
 		for filename in filenames:
 			if filename.endswith('jpg'):
 				scale(os.path.join(parent, filename))
