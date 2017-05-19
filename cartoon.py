@@ -6,7 +6,8 @@ import os, Queue, threading
 
 BASE_URL = 'http://www.177picxx.info/html/category/tt'
 
-def fetchGallery(url, title, page = 1, urlArr = None):
+def fetchGallery(url, title, cartoonPage, page = 1, urlArr = None):
+	print('now cartoonPage => %d' % cartoonPage)
 	print('now cartoon => %s' % title)
 	if not urlArr:
 		urlArr = []
@@ -20,10 +21,9 @@ def fetchGallery(url, title, page = 1, urlArr = None):
 			helper.writeFile('\n'.join(urlArr), u'%s/url.txt' % dirName)
 			return True
 		urlArr.append(src)
-	return fetchGallery(url, title, page + 1, urlArr)
+	return fetchGallery(url, title, cartoonPage, page + 1, urlArr)
 
 def fetchPage(page):
-	print('now page => %d' % page)
 	url = '%s/page/%d/' % (BASE_URL, page)
 	pq = helper.get(url)
 	for a in pq('a.disp_a'):
@@ -32,7 +32,7 @@ def fetchPage(page):
 		dirName = os.path.join('cartoon', title)
 		if not os.path.exists(os.path.join(dirName, 'url.txt')):
 			helper.mkDir(dirName)
-			if not fetchGallery(url, title):
+			if not fetchGallery(url, title, page):
 				return False
 	return True
 
