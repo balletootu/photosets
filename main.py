@@ -52,10 +52,16 @@ def fetchLargeImageUrl(imgUrl, tag):
 		elif 'addimage.info' in imgUrl:
 			print('addimage.info is over!!!')
 			return ''
+		elif 'dragimage.org' in imgUrl:
+			print('dragimage.org is over!!!')
+			return ''
 		else:
 			print('unknow image url => %s' % imgUrl)
 			return None
 	return ''
+
+def filterDirName(dirName):
+	return dirName.replace(':', '').replace('*', '').replace('?', '').replace('"', '').replace('<', '').replace('>', '').replace('|', '')
 
 def fetchGallery(url, page):
 	print('now page %d' % page)
@@ -64,20 +70,24 @@ def fetchGallery(url, page):
 	title = pq('title').text()
 	title = title.split(' | ')[0]
 	dirName = os.path.join('imgs', '0uploaded', title)
+	dirName = filterDirName(dirName)
 	if os.path.exists(dirName):
 		print('exists!!! skip!')
 		return True
 	dirName = os.path.join('imgs', '0uploaded', '0baidu', title)
+	dirName = filterDirName(dirName)
 	if os.path.exists(dirName):
 		print('exists!!! skip!')
 		return True
 	dirName = os.path.join('imgs', '0error', title)
+	dirName = filterDirName(dirName)
 	if os.path.exists(dirName):
 		print('exists!!! skip!')
 		return True
 
 	# 创建本地目录
 	dirName = os.path.join('imgs', title)
+	dirName = filterDirName(dirName)
 	# print('make dir %s' % dirName)
 	# 如果存在url.txt，说明这个相册已经抓取过了，直接return吧
 	if os.path.exists('%s/url.txt' % dirName):
@@ -98,6 +108,10 @@ def fetchGallery(url, page):
 				if len(arr) == 0:
 					print('can\'t find any <a>')
 					if url == 'http://adultphotosets.ru/met-art-lupita-gifera/':
+						return True
+					if url == 'http://adultphotosets.ru/rylskyart-oretha-mars-second-2-mars/':
+						return True
+					if url == 'http://adultphotosets.ru/met-art-nikolina-deirth/':
 						return True
 					return False
 				aArr = [{'href': a} for a in arr]
@@ -136,8 +150,7 @@ def fetchPage(page):
 			return False
 	return True
 
-if __name__ == '__main__':
-	# page: 178
-	for page in xrange(178, 233):
+if __name__ == '__main__':	
+	for page in xrange(1, 234):
 		if not fetchPage(page):
 			break
