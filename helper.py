@@ -19,7 +19,7 @@ def mkDir(path):
 
 def writeFile(content, path):
 	try:
-		f = open(path, 'wb')
+		f = open(path, 'w')
 		f.write(content)
 		f.close()
 		return True
@@ -36,7 +36,7 @@ def downloadImg(url, imgPath):
 			print('download image: %s' % url)
 			try:
 				r = requests.get(url, stream = True)
-			except Exception, e:
+			except Exception as e:
 				print(e)
 				return
 			with open(imgPath, 'wb') as f:

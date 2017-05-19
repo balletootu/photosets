@@ -4,7 +4,7 @@
 # 修复imgchili网站的一个bug
 
 import helper
-import re, os, Queue, threading
+import re, os
 import shutil
 
 def fetchLargeImageUrl(imgUrl, tag):
@@ -87,8 +87,6 @@ def fetchGallery(url):
 				imgArr = pq('div.content>p>a>img')
 				# http://t10.imgchili
 				tag = imgArr[0].get('src').replace('http://', '').split('.imgchili')[0].replace('t', '')
-	print tag
-	print '====================================='
 	for a in aArr:
 		print('%s image index => %d' % (helper.now(), i))
 		url = fetchLargeImageUrl(a.get('href'), tag)
@@ -96,7 +94,7 @@ def fetchGallery(url):
 			print('fetchLargeImageUrl failed')
 			return None
 		else:
-			if url <> '':
+			if url != '':
 				imgUrl.append(url)
 			i += 1
 	if len(imgUrl) > 0:

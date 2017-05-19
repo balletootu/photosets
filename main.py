@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import helper
-import re, os, Queue, threading
+import re, os
 
 BASE_URL = 'http://adultphotosets.ru'
 
@@ -135,9 +135,10 @@ def fetchGallery(url, page):
 				print('fetchLargeImageUrl failed')
 				return False
 		else:
-			if url <> '':
+			if url != '':
 				imgUrl.append(url)
 		i += 1
+		
 	if len(imgUrl) > 0:
 		helper.writeFile('\n'.join(imgUrl), '%s/url.txt' % dirName)
 	return True
@@ -150,7 +151,7 @@ def fetchPage(page):
 			return False
 	return True
 
-if __name__ == '__main__':	
-	for page in xrange(1, 234):
+if __name__ == '__main__':
+	for page in range(1, 234):
 		if not fetchPage(page):
 			break

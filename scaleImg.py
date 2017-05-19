@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import Image, os
+from PIL import Image
+import os
 
 def scale(imgPath):
 	# 打开一个jpg图像文件，注意路径要改成你自己的:
@@ -21,7 +22,8 @@ def scale(imgPath):
 		print('saved => %s' % '.'.join(arr))
 
 if __name__ == '__main__':
-	for parent, dirnames, filenames in os.walk(r'G:\adultphotosets\imgs\Hegre-Art – Mya and Lola – Body Contact'.decode('utf-8')):
+	# .decode('utf-8')
+	for parent, dirnames, filenames in os.walk(r'G:\adultphotosets\imgs\Hegre-Art – Nicolette – Playboy Playmate'):
 		for filename in filenames:
 			if filename.endswith('jpg'):
 				scale(os.path.join(parent, filename))
