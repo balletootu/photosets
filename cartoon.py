@@ -7,8 +7,8 @@ import os, Queue, threading
 BASE_URL = 'http://www.177picxx.info/html/category/tt'
 
 def fetchGallery(url, title, cartoonPage, page = 1, urlArr = None):
-	print('now cartoonPage => %d' % cartoonPage)
-	print('now cartoon => %s' % title)
+	print('%s => now cartoonPage => %d' % (helper.now(), cartoonPage))
+	# print('now cartoon => %s' % title)
 	if not urlArr:
 		urlArr = []
 	pq = helper.get('%s/%d' % (url, page))
@@ -37,6 +37,6 @@ def fetchPage(page):
 	return True
 
 if __name__ == '__main__':
-	for page in xrange(1, 224):
+	for page in xrange(8, 224):
 		if not fetchPage(page):
 			break
