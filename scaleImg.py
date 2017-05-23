@@ -23,7 +23,7 @@ def scale(imgPath):
 
 if __name__ == '__main__':
 	# .decode('utf-8')
-	for parent, dirnames, filenames in os.walk(r'G:\adultphotosets\imgs\Hegre-Art – Nicolette – Playboy Playmate'):
+	for parent, dirnames, filenames in os.walk(r'G:\adultphotosets\imgs\MC-Nudes – Ellena – Show'):
 		for filename in filenames:
 			if filename.endswith('jpg'):
 				scale(os.path.join(parent, filename))
