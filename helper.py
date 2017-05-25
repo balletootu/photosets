@@ -44,10 +44,10 @@ def downloadImg(url, imgPath):
 					if chunk:
 						f.write(chunk)
 						f.flush()
-def get(url, cookies = {}):
+def get(url, cookies = {}, myHeaders = None):
 	print('get url => ' + url)
 	global headers
-	response = requests.get(url, headers = headers, cookies = cookies)
+	response = requests.get(url, headers = myHeaders or headers, cookies = cookies)
 	if response.status_code == 200:
 		return PyQuery(response.text)
 	else:
