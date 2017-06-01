@@ -30,7 +30,8 @@ cookies = {
 }
 
 if __name__ == '__main__':
-	baseUrl = 'http://comic.ck101.com/vols/8176348'
+	# baseUrl = 'http://comic.ck101.com/vols/8176348'
+	baseUrl = 'http://www.qqmanga.com/vols/8176348/1'
 	page = 7
 	# pq = helper.get('%s/%d' % (baseUrl, page), cookies, headers)
 	# print(pq('img#defualtPagePic'))
