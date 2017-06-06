@@ -67,12 +67,39 @@ def downloadImg(url, imgPath, referer):
 					f.flush()
 
 if __name__ == '__main__':
-	baseUrl = 'http://www.hhssee.com'
-	pageName = 'page245343'
-	for page in range(1, 22):
-		url = '%s/%s/%d.html?s=6&d=0' % (baseUrl, pageName, page)
-		pq = helper.get(url)
-		imgName = getImgName(pq)
-		imgUrl = 'http://164.94201314.net/dm06%s' % unsuan(imgName)
-		downloadImg(imgUrl, 'hhssee/妄想老师/029/%03d.jpg' % page, url)
+	baseUrl = 'http://www.hhssee.com/manhua8379.html'
+	pq = helper.get(baseUrl)
+	comicName = pq('h1').text()
+	comicDir = os.path.join('hhssee', comicName)
+	helper.mkDir(comicDir)
+
+	bookUrlArr = []
+	for a in pq('a.l_s'):
+		bookUrlArr.append({'url': 'http://www.hhssee.com%s' % a.get('href'), 'name': a.text})
+	
+	bookIndex = 0
+	for bookData in bookUrlArr:
+		bookUrl = bookData.get('url')
+		bookName = bookData.get('name')
+		bookIndex += 1
+		if bookIndex < 108:
+			continue
+		
+		bookDir = os.path.join(comicDir, bookName)
+		helper.mkDir(bookDir)
+
+		s = int(bookUrl.split('?')[1].replace('s=', ''))
+		bookUrlPrefix = '/'.join(bookUrl.split('/')[:-1])
+		pq = helper.get(bookUrl)
+		totalPage = int(pq('input#hdPageCount').attr('value'))
 		time.sleep(3)
+		for page in range(1, totalPage + 1):
+			if bookIndex == 108 and page < 1:
+				continue
+			print('bookIndex = %d, page = %d' % (bookIndex, page))
+			url = '%s/%d.html?s=%d' % (bookUrlPrefix, page, s)
+			pq = helper.get(url)
+			imgName = getImgName(pq)
+			imgUrl = 'http://164.94201314.net/dm%02d%s' % (s, unsuan(imgName))
+			downloadImg(imgUrl, os.path.join(bookDir, '%03d.jpg' % page), url)
+			time.sleep(5)
