@@ -67,7 +67,8 @@ def downloadImg(url, imgPath, referer):
 					f.flush()
 
 if __name__ == '__main__':
-	baseUrl = 'http://www.hhssee.com/manhua8379.html'
+	baseUrl = 'http://www.hhssee.com/manhua14874.html'
+	# http://www.hhssee.com/manhua31358.html
 	pq = helper.get(baseUrl)
 	comicName = pq('h1').text()
 	comicDir = os.path.join('hhssee', comicName)
@@ -79,11 +80,13 @@ if __name__ == '__main__':
 	
 	bookIndex = 0
 	for bookData in bookUrlArr:
-		bookUrl = bookData.get('url')
-		bookName = bookData.get('name')
 		bookIndex += 1
-		if bookIndex < 108:
+		if bookIndex < 5:
 			continue
+		bookName = bookData.get('name')
+		if not '卷' in bookName:
+			continue
+		bookUrl = bookData.get('url')
 		
 		bookDir = os.path.join(comicDir, bookName)
 		helper.mkDir(bookDir)
@@ -94,7 +97,7 @@ if __name__ == '__main__':
 		totalPage = int(pq('input#hdPageCount').attr('value'))
 		time.sleep(3)
 		for page in range(1, totalPage + 1):
-			if bookIndex == 108 and page < 1:
+			if bookIndex == 5 and page < 40:
 				continue
 			print('bookIndex = %d, page = %d' % (bookIndex, page))
 			url = '%s/%d.html?s=%d' % (bookUrlPrefix, page, s)
