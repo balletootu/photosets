@@ -41,7 +41,7 @@ def fetchLargeImageUrl(imgUrl, tag):
 				return ''
 			img = pq('img.img-responsive')
 			url = img.attr('src')
-			return url
+			return url or ''
 		elif 'dfiles.ru' in imgUrl:
 			# 这是个提供下载zip的页面，直接跳过
 			return ''
