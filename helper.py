@@ -44,6 +44,7 @@ def downloadImg(url, imgPath):
 					if chunk:
 						f.write(chunk)
 						f.flush()
+
 def get(url, cookies = {}, myHeaders = None):
 	print('get url => ' + url)
 	global headers
