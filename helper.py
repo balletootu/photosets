@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, requests, time
+import os, requests, time, platform
 from pyquery import PyQuery
 
 headers = {'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'}
@@ -62,3 +62,9 @@ def post(url):
 		return PyQuery(response.text)
 	else:
 		return None
+
+def optimizeImg(imgFile):
+	system = platform.system()
+	file = os.path.join(os.path.abspath("."), "pingo.exe")
+	if (system == "Windows" and os.path.isfile(file)):
+		os.system("{} -s5 {}".format(file, imgFile))
