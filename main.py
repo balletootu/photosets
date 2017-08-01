@@ -152,6 +152,6 @@ def fetchPage(page):
 	return True
 
 if __name__ == '__main__':
-	for page in range(1, 234):
+	for page in range(3, 234):
 		if not fetchPage(page):
 			break
