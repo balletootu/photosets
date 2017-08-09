@@ -21,7 +21,7 @@ def fetchLargeImageUrl(imgUrl, tag):
 		elif 'img.yt' in imgUrl or 'imgcandy.net' in imgUrl:
 			if 'img.yt' in imgUrl:
 				imgUrl = imgUrl.replace('http:', 'https:')
-			pq = helper.post(imgUrl)
+			pq = helper.post(imgUrl, 2)
 			img = pq('img.centred')
 			return img.attr('src')
 		elif 'imgchili.net' in imgUrl:

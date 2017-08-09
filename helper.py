@@ -54,7 +54,9 @@ def get(url, cookies = {}, myHeaders = None):
 	else:
 		return None
 
-def post(url):
+def post(url, sleep = 0):
+	if sleep > 0:
+		time.sleep(sleep)
 	print('post url => ' + url)
 	global headers
 	response = requests.post(url, headers = headers, cookies = {}, data = {'imgContinue': 'Continue to image ... '})
