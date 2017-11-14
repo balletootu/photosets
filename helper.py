@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import os, requests, time, platform
+import inspect
 from pyquery import PyQuery
+from requests.adapters import HTTPAdapter
 
 headers = {'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'}
 
@@ -45,10 +47,17 @@ def downloadImg(url, imgPath):
 						f.write(chunk)
 						f.flush()
 
-def get(url, cookies = {}, myHeaders = None):
+def get(url, cookies = {}, myHeaders = None, sleep = None):
+	s = requests.Session()
+	s.mount('http://', HTTPAdapter(max_retries=10))
+	s.mount('https://', HTTPAdapter(max_retries=10))
+	if sleep:
+		time.sleep(sleep)
 	print('get url => ' + url)
 	global headers
-	response = requests.get(url, headers = myHeaders or headers, cookies = cookies)
+
+	response = s.get(url, headers=myHeaders or headers, cookies=cookies, timeout=10)
+	
 	if response.status_code == 200:
 		return PyQuery(response.text)
 	else:
@@ -70,3 +79,6 @@ def optimizeImg(imgFile):
 	file = os.path.join(os.path.abspath("."), "pingo.exe")
 	if (system == "Windows" and os.path.isfile(file)):
 		os.system("{} -s5 {}".format(file, imgFile))
+
+def lookUp(obj):
+	print(inspect.getmembers(obj, inspect.ismethod))
