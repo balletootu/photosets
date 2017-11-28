@@ -35,9 +35,10 @@ def downloadImg(url, imgPath):
 		if os.path.exists(imgPath):
 			print('%s is exists, jump it!' % imgPath)
 		else:
-			print('download image: %s' % url)
+			print('[%s] download image: %s' % (now(), url))
 			try:
-				r = requests.get(url, stream = True)
+				global headers
+				r = requests.get(url, stream=True, headers=headers)
 			except Exception as e:
 				print(e)
 				return
@@ -64,11 +65,14 @@ def get(url, cookies = {}, myHeaders = None, sleep = None):
 		return None
 
 def post(url, sleep = 0):
+	s = requests.Session()
+	s.mount('http://', HTTPAdapter(max_retries=10))
+	s.mount('https://', HTTPAdapter(max_retries=10))
 	if sleep > 0:
 		time.sleep(sleep)
 	print('post url => ' + url)
 	global headers
-	response = requests.post(url, headers = headers, cookies = {}, data = {'imgContinue': 'Continue to image ... '})
+	response = s.post(url, headers = headers, cookies = {}, data = {'imgContinue': 'Continue to image ... '})
 	if response.status_code == 200:
 		return PyQuery(response.text)
 	else:
@@ -82,3 +86,31 @@ def optimizeImg(imgFile):
 
 def lookUp(obj):
 	print(inspect.getmembers(obj, inspect.ismethod))
+
+def getMonth(english):
+	'''从英文转成阿拉伯数字'''
+	if english == 'Jan':
+		return 1
+	if english == 'Feb':
+		return 2
+	if english == 'Mar':
+		return 3
+	if english == 'Apr':
+		return 4
+	if english == 'May':
+		return 5
+	if english == 'Jun':
+		return 6
+	if english == 'Jul':
+		return 7
+	if english == 'Aug':
+		return 8
+	if english == 'Sep':
+		return 9
+	if english == 'Oct':
+		return 10
+	if english == 'Nov':
+		return 11
+	if english == 'Dec':
+		return 12
+	return english
