@@ -8,7 +8,7 @@ import os
 import json
 import datetime
 import helper
-import mongo
+# import mongo
 
 CHAT_ARR = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
             'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -71,7 +71,7 @@ def fetch_model(url, name, head_img):
         helper.writeFile(photo_json_str, os.path.join('metart', 'photo', '%s_%s.json' % (date_str, photo_name)))
     helper.writeFile(json.dumps(model_info), os.path.join('metart', 'model', '%s.json' % (name)))
 
-def main(chat_index=25, enabled=False):
+def main(chat_index=0, enabled=False):
     '''main'''
     b = True
     is_enabled = enabled
@@ -82,7 +82,7 @@ def main(chat_index=25, enabled=False):
         for item in a_arr:
             if b:
                 url = item.get('href')
-                if url == "https://www.metart.com/model/zusie-a/":
+                if url == "https://www.metart.com/model/ada-a/":
                     is_enabled = True
                 if is_enabled:
                     head_img = item.find('img').get('src')
