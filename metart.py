@@ -57,7 +57,7 @@ def fetch_model(url, name, head_img):
         # date = datetime.datetime(int(date_str.split(', ')[1]), helper.getMonth(date_str.split(' ')[0]), int(date_str.split(' ')[1].replace(',', '')))
         # print date
         # 下载照片的封面
-        photo_path = os.path.join('metart', 'photo', '%s_%s_cover_MetArt.jpg' % (date_str, photo_name))
+        photo_path = os.path.join('metart', 'photo', '%s_%s_cover_MetArt.jpg' % (date_str, photo_name.replace('/', ' ')))
         helper.downloadImg(img.get('src'), photo_path)
         # 存到数据库
         # mongo.newAlbun(photo_name, date)
@@ -71,7 +71,7 @@ def fetch_model(url, name, head_img):
         helper.writeFile(photo_json_str, os.path.join('metart', 'photo', '%s_%s.json' % (date_str, photo_name)))
     helper.writeFile(json.dumps(model_info), os.path.join('metart', 'model', '%s.json' % (name)))
 
-def main(chat_index=18, enabled=False):
+def main(chat_index=25, enabled=False):
     '''main'''
     b = True
     is_enabled = enabled
@@ -82,7 +82,7 @@ def main(chat_index=18, enabled=False):
         for item in a_arr:
             if b:
                 url = item.get('href')
-                if url == "https://www.metart.com/model/skarlett/":
+                if url == "https://www.metart.com/model/zusie-a/":
                     is_enabled = True
                 if is_enabled:
                     head_img = item.find('img').get('src')
