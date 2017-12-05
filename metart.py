@@ -20,6 +20,8 @@ def fetch_model(url, name, head_img):
     helper.mkDir(os.path.join('metart', 'photo'))
     # 下载头像先
     helper.downloadImg(head_img, os.path.join(model_dir, '%s_MetArt.jpg' % name))
+    if os.path.exists(os.path.join('metart', 'model', '%s.json' % (name))):
+        return    
     # 然后去抓取详细数据
     model_info = {
         'name': name,
@@ -39,6 +41,7 @@ def fetch_model(url, name, head_img):
         # if item.getchildren()[0].getchildren()[0].text:
         #     pass
     if custom_content is None:
+        helper.writeFile(json.dumps(model_info), os.path.join('metart', 'model', '%s.json' % (name)))
         return
     # if len(custom_content_list) == 3:
     #     custom_content = custom_content_list[1]
@@ -53,7 +56,12 @@ def fetch_model(url, name, head_img):
         date_str = custom_list_item_detailed.getchildren()[1].getchildren()[1].text_content().split(': ')[1]
         date_str = '%s-%d-%s' % (date_str.split(', ')[1], helper.getMonth(date_str.split(' ')[0]), date_str.split(' ')[1].replace(',', ''))
         # 模特名
-        model_name = custom_list_item_detailed.getchildren()[1].getchildren()[2].getchildren()[1].text
+        arr = custom_list_item_detailed.getchildren()[1].getchildren()[2].getchildren()
+        model_name_arr = []
+        for i in xrange(1, len(arr)):
+            model_name_arr.append(arr[i].text)
+        # model_name = custom_list_item_detailed.getchildren()[1].getchildren()[2].getchildren()[1].text
+        # print(model_name_arr)
         # date = datetime.datetime(int(date_str.split(', ')[1]), helper.getMonth(date_str.split(' ')[0]), int(date_str.split(' ')[1].replace(',', '')))
         # print date
         # 下载照片的封面
@@ -64,7 +72,7 @@ def fetch_model(url, name, head_img):
         photo_json = {
             'date': date_str,
             'name': photo_name,
-            'model': model_name
+            'model': model_name_arr
         }
         photo_json_str = json.dumps(photo_json)
         model_info.get('photos').append(photo_json)
@@ -82,17 +90,20 @@ def main(chat_index=0, enabled=False):
         for item in a_arr:
             if b:
                 url = item.get('href')
-                if url == "https://www.metart.com/model/ada-a/":
+                if url == "https://www.metart.com/model/uliya-a/":
                     is_enabled = True
                 if is_enabled:
                     head_img = item.find('img').get('src')
                     name = item.find('img').get('alt')
-                    fetch_model(url, name, head_img)
+                    json_path = os.path.join('metart', 'model', '%s.json' % name)
+                    img_pathh = os.path.join('metart', 'model', '%s_MetArt.jpg' % name)
+                    if not os.path.exists(json_path) or not os.path.exists(img_pathh):
+                        fetch_model(url, name, head_img)
                 b = False
             else:
                 b = True
         main(chat_index + 1, is_enabled)
 
 if __name__ == '__main__':
-    main()
-    # fetch_model('https://www.metart.com/model/gloria-sol/', 'Gloria Sol', '')
+    main(13, True)
+    # fetch_model('https://www.metart.com/model/helen-a/', 'Gloria Sol', '')
