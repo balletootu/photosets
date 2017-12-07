@@ -134,7 +134,7 @@ def fetchGallery(url, page):
 		if url == None:
 			if i == 0:
 				print('fetchLargeImageUrl failed')
-				return False
+				return True
 		else:
 			if url != '':
 				imgUrl.append(url)
@@ -151,7 +151,7 @@ def fetchPage(page):
 	for a in pq('h2 > a'):
 		url = a.get('href')
 		if not enalbed:
-			if url == 'http://adultphotosets.ru/femjoy-sveta-l-thanks/':
+			if url == 'http://adultphotosets.ru/sexart-jia-lissa-jere/':
 				enalbed = True
 		if enalbed:
 			if not fetchGallery(url, page):
@@ -159,6 +159,6 @@ def fetchPage(page):
 	return True
 
 if __name__ == '__main__':
-	for page in range(4, 234):
+	for page in range(13, 234):
 		if not fetchPage(page):
 			break

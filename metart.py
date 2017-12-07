@@ -51,7 +51,7 @@ def fetch_model(url, name, head_img):
     for list_group_item in list_group_item_list:   
         custom_list_item_detailed = list_group_item.getchildren()[1]
         img = custom_list_item_detailed.getchildren()[0].getchildren()[0].getchildren()[0]
-        photo_name = custom_list_item_detailed.getchildren()[1].getchildren()[0].getchildren()[0].text
+        photo_name = img.get('alt')# custom_list_item_detailed.getchildren()[1].getchildren()[0].getchildren()[0].text
         # Released: Feb 26, 2016
         date_str = custom_list_item_detailed.getchildren()[1].getchildren()[1].text_content().split(': ')[1]
         date_str = '%s-%d-%s' % (date_str.split(', ')[1], helper.getMonth(date_str.split(' ')[0]), date_str.split(' ')[1].replace(',', ''))
@@ -105,5 +105,5 @@ def main(chat_index=0, enabled=False):
         main(chat_index + 1, is_enabled)
 
 if __name__ == '__main__':
-    main(13, True)
-    # fetch_model('https://www.metart.com/model/helen-a/', 'Gloria Sol', '')
+    # main(13, True)
+    fetch_model('https://www.metart.com/model/lorian/', 'Lorian', '')

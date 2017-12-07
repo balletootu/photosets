@@ -102,10 +102,10 @@ if __name__ == '__main__':
     # fetchModel()
     
     # https://www.eternaldesire.com/model/nika-n/
+    # https://www.metart.com/model/nika-n/
 
     # https://www.thelifeerotic.com/model/nika-n/
     # https://www.metartx.com/model/nika-n/
-    # https://www.metart.com/model/nika-n/
     # https://www.vivthomas.com/model/nika-n/
     # https://www.sexart.com/model/nika-n/
     # https://www.eroticbeauty.com/model/adel-morel/
