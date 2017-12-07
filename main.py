@@ -151,7 +151,7 @@ def fetchPage(page):
 	for a in pq('h2 > a'):
 		url = a.get('href')
 		if not enalbed:
-			if url == 'http://adultphotosets.ru/sexart-jia-lissa-jere/':
+			if url == 'http://adultphotosets.ru/femjoy-angel-c-swing/':
 				enalbed = True
 		if enalbed:
 			if not fetchGallery(url, page):
