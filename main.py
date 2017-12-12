@@ -151,7 +151,7 @@ def fetchPage(page):
 	for a in pq('h2 > a'):
 		url = a.get('href')
 		if not enalbed:
-			if url == 'http://adultphotosets.ru/femjoy-angel-c-swing/':
+			if url == 'http://adultphotosets.ru/femjoy-gracie-back-again/':
 				enalbed = True
 		if enalbed:
 			if not fetchGallery(url, page):
@@ -159,6 +159,6 @@ def fetchPage(page):
 	return True
 
 if __name__ == '__main__':
-	for page in range(13, 234):
+	for page in range(26, 234):
 		if not fetchPage(page):
 			break
