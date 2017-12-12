@@ -5,7 +5,7 @@ import helper
 import re, os
 
 BASE_URL = 'http://adultphotosets.ru'
-enalbed = False
+enalbed = True
 
 def fetchLargeImageUrl(imgUrl, tag):
 	if not imgUrl.endswith('zip'):
@@ -159,6 +159,6 @@ def fetchPage(page):
 	return True
 
 if __name__ == '__main__':
-	for page in range(26, 234):
+	for page in range(1, 234):
 		if not fetchPage(page):
 			break
