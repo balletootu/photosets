@@ -5,7 +5,7 @@ import helper
 import re, os
 
 BASE_URL = 'http://adultphotosets.ru'
-enalbed = True
+enalbed = False
 
 def fetchLargeImageUrl(imgUrl, tag):
 	if not imgUrl.endswith('zip'):
@@ -76,6 +76,11 @@ def fetchGallery(url, page):
 		print('exists!!! skip!')
 		return True
 	dirName = os.path.join('imgs', '0uploaded', '0baidu', title)
+	dirName = filterDirName(dirName)
+	if os.path.exists(dirName):
+		print('exists!!! skip!')
+		return True
+	dirName = os.path.join('imgs', '0uploaded', 'MetArt', title)
 	dirName = filterDirName(dirName)
 	if os.path.exists(dirName):
 		print('exists!!! skip!')
@@ -151,7 +156,7 @@ def fetchPage(page):
 	for a in pq('h2 > a'):
 		url = a.get('href')
 		if not enalbed:
-			if url == 'http://adultphotosets.ru/femjoy-gracie-back-again/':
+			if url == 'http://adultphotosets.ru/watch4beauty-helga-grey-my-new-swimwear/':
 				enalbed = True
 		if enalbed:
 			if not fetchGallery(url, page):
@@ -159,6 +164,6 @@ def fetchPage(page):
 	return True
 
 if __name__ == '__main__':
-	for page in range(1, 234):
+	for page in range(2, 234):
 		if not fetchPage(page):
 			break
