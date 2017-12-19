@@ -15,6 +15,6 @@ npm-debug.log
 *.zip
 *.jpg
 
-animezilla/
-eternaldesire/
-metart/
+./animezilla/
+./eternaldesire/
+./metart/

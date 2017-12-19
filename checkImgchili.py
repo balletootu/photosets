@@ -136,9 +136,9 @@ if __name__ == '__main__':
 	dirName = os.path.join('imgs')
 	for parent, dirNames, fileNames in os.walk(dirName):
 		for dirName in dirNames:
-			if '0baidu' in parent or '0error' in parent or '0upload' in parent:
+			if '0baidu' in parent or '0error' in parent or '0upload' in parent or '0nas' in parent:
 				continue
-			if dirName == '0baidu' or dirName == '0error' or dirName == '0uploaded':
+			if dirName == '0baidu' or dirName == '0error' or dirName == '0uploaded' or dirName == '0nas':
 				continue
 			urlTxtPath = os.path.join(parent, dirName, 'url.txt')
 			if not os.path.exists(urlTxtPath):
