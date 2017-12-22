@@ -35,6 +35,8 @@ def downloadImg(url, imgPath):
 		if os.path.exists(imgPath):
 			print('%s is exists, jump it!' % imgPath)
 		else:
+			parent = '/'.join(imgPath.split('/')[: -1])
+			mkDir(parent)
 			print('[%s] download image: %s' % (now(), url))
 			try:
 				global headers
