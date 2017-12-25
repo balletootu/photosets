@@ -19,65 +19,61 @@ def fetch_model(url, name, head_img):
     helper.mkDir(model_dir)
     helper.mkDir(os.path.join('metart', 'photo'))
     # 下载头像先
-    helper.downloadImg(head_img, os.path.join(model_dir, '%s_MetArt.jpg' % name))
-    if os.path.exists(os.path.join('metart', 'model', '%s.json' % (name))):
-        return    
-    # 然后去抓取详细数据
-    model_info = {
-        'name': name,
-        'photos': []
-    }
-    pyquery = helper.get(url)
-    country_span = pyquery('.custom-country')
-    model_info['country'] = country_span.text()
+    helper.downloadImg(head_img, os.path.join(model_dir, '%s.jpg' % name))
+    # if os.path.exists(os.path.join('metart', 'model', '%s.json' % (name))):
+    #     return    
+    # # 然后去抓取详细数据
+    # model_info = {
+    #     'name': name,
+    #     'photos': []
+    # }
+    # pyquery = helper.get(url)
+    # country_span = pyquery('.custom-country')
+    # model_info['country'] = country_span.text()
 
-    # 获取照片数据
-    custom_content_list = pyquery('.custom-content-list')
-    custom_content = None
-    for item in custom_content_list:
-        if item.getchildren()[0].getchildren()[0].text.startswith('Photos with'):
-            custom_content = item
-            break
-        # if item.getchildren()[0].getchildren()[0].text:
-        #     pass
-    if custom_content is None:
-        helper.writeFile(json.dumps(model_info), os.path.join('metart', 'model', '%s.json' % (name)))
-        return
-    # if len(custom_content_list) == 3:
-    #     custom_content = custom_content_list[1]
-    # else:
-    #     custom_content = custom_content_list[0]
-    list_group_item_list = custom_content.getchildren()[2].findall('li')
-    for list_group_item in list_group_item_list:   
-        custom_list_item_detailed = list_group_item.getchildren()[1]
-        img = custom_list_item_detailed.getchildren()[0].getchildren()[0].getchildren()[0]
-        photo_name = img.get('alt')# custom_list_item_detailed.getchildren()[1].getchildren()[0].getchildren()[0].text
-        # Released: Feb 26, 2016
-        date_str = custom_list_item_detailed.getchildren()[1].getchildren()[1].text_content().split(': ')[1]
-        date_str = '%s-%d-%s' % (date_str.split(', ')[1], helper.getMonth(date_str.split(' ')[0]), date_str.split(' ')[1].replace(',', ''))
-        # 模特名
-        arr = custom_list_item_detailed.getchildren()[1].getchildren()[2].getchildren()
-        model_name_arr = []
-        for i in xrange(1, len(arr)):
-            model_name_arr.append(arr[i].text)
-        # model_name = custom_list_item_detailed.getchildren()[1].getchildren()[2].getchildren()[1].text
-        # print(model_name_arr)
-        # date = datetime.datetime(int(date_str.split(', ')[1]), helper.getMonth(date_str.split(' ')[0]), int(date_str.split(' ')[1].replace(',', '')))
-        # print date
-        # 下载照片的封面
-        photo_path = os.path.join('metart', 'photo', '%s_%s_cover_MetArt.jpg' % (date_str, photo_name.replace('/', ' ')))
-        helper.downloadImg(img.get('src'), photo_path)
-        # 存到数据库
-        # mongo.newAlbun(photo_name, date)
-        photo_json = {
-            'date': date_str,
-            'name': photo_name,
-            'model': model_name_arr
-        }
-        photo_json_str = json.dumps(photo_json)
-        model_info.get('photos').append(photo_json)
-        helper.writeFile(photo_json_str, os.path.join('metart', 'photo', '%s_%s.json' % (date_str, photo_name)))
-    helper.writeFile(json.dumps(model_info), os.path.join('metart', 'model', '%s.json' % (name)))
+    # # 获取照片数据
+    # custom_content_list = pyquery('.custom-content-list')
+    # custom_content = None
+    # for item in custom_content_list:
+    #     if item.getchildren()[0].getchildren()[0].text.startswith('Photos with'):
+    #         custom_content = item
+    #         break
+    #     # if item.getchildren()[0].getchildren()[0].text:
+    #     #     pass
+    # if custom_content is None:
+    #     helper.writeFile(json.dumps(model_info), os.path.join('metart', 'model', '%s.json' % (name)))
+    #     return
+    # list_group_item_list = custom_content.getchildren()[2].findall('li')
+    # for list_group_item in list_group_item_list:   
+    #     custom_list_item_detailed = list_group_item.getchildren()[1]
+    #     img = custom_list_item_detailed.getchildren()[0].getchildren()[0].getchildren()[0]
+    #     photo_name = img.get('alt')# custom_list_item_detailed.getchildren()[1].getchildren()[0].getchildren()[0].text
+    #     # Released: Feb 26, 2016
+    #     date_str = custom_list_item_detailed.getchildren()[1].getchildren()[1].text_content().split(': ')[1]
+    #     date_str = '%s-%d-%s' % (date_str.split(', ')[1], helper.getMonth(date_str.split(' ')[0]), date_str.split(' ')[1].replace(',', ''))
+    #     # 模特名
+    #     arr = custom_list_item_detailed.getchildren()[1].getchildren()[2].getchildren()
+    #     model_name_arr = []
+    #     for i in xrange(1, len(arr)):
+    #         model_name_arr.append(arr[i].text)
+    #     # model_name = custom_list_item_detailed.getchildren()[1].getchildren()[2].getchildren()[1].text
+    #     # print(model_name_arr)
+    #     # date = datetime.datetime(int(date_str.split(', ')[1]), helper.getMonth(date_str.split(' ')[0]), int(date_str.split(' ')[1].replace(',', '')))
+    #     # print date
+    #     # 下载照片的封面
+    #     photo_path = os.path.join('metart', 'photo', '%s_%s_cover_MetArt.jpg' % (date_str, photo_name.replace('/', ' ')))
+    #     helper.downloadImg(img.get('src'), photo_path)
+    #     # 存到数据库
+    #     # mongo.newAlbun(photo_name, date)
+    #     photo_json = {
+    #         'date': date_str,
+    #         'name': photo_name,
+    #         'model': model_name_arr
+    #     }
+    #     photo_json_str = json.dumps(photo_json)
+    #     model_info.get('photos').append(photo_json)
+    #     helper.writeFile(photo_json_str, os.path.join('metart', 'photo', '%s_%s.json' % (date_str, photo_name)))
+    # helper.writeFile(json.dumps(model_info), os.path.join('metart', 'model', '%s.json' % (name)))
 
 def main(chat_index=0, enabled=False):
     '''main'''
@@ -105,5 +101,5 @@ def main(chat_index=0, enabled=False):
         main(chat_index + 1, is_enabled)
 
 if __name__ == '__main__':
-    # main(13, True)
-    fetch_model('https://www.metart.com/model/lorian/', 'Lorian', '')
+    main(0, True)
+    # fetch_model('https://www.metart.com/model/lorian/', 'Lorian', '')

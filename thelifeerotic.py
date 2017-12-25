@@ -117,8 +117,9 @@ def main(chat, enabled=False):
                 b = False
             else:
                 b = True
-        main(CHAT_ARR[chat_index + 1], is_enabled)
+        if chat_index < len(CHAT_ARR) - 1:
+            main(CHAT_ARR[chat_index + 1], is_enabled)
 
 
 if __name__ == '__main__':
-    main('R', True)
+    main('Z', True)
