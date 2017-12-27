@@ -50,7 +50,7 @@ def downloadImg(url, imgPath):
 						f.write(chunk)
 						f.flush()
 
-def get(url, cookies = {}, myHeaders = None, sleep = None):
+def get(url, cookies = {}, myHeaders = None, sleep = None, returnText = False):
 	s = requests.Session()
 	s.mount('http://', HTTPAdapter(max_retries=10))
 	s.mount('https://', HTTPAdapter(max_retries=10))
@@ -62,7 +62,7 @@ def get(url, cookies = {}, myHeaders = None, sleep = None):
 	response = s.get(url, headers=myHeaders or headers, cookies=cookies, timeout=10)
 	
 	if response.status_code == 200:
-		return PyQuery(response.text)
+		return response.text if returnText else PyQuery(response.text)
 	else:
 		return None
 
