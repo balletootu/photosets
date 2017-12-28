@@ -149,6 +149,8 @@ if __name__ == '__main__':
 				f.close()
 				if 'imgchili' in urlTextContent:
 					arr.append(dirName)
+				if 'ipics.info' in urlTextContent:
+					arr.append(dirName)
 	# print arr
 	for a in arr:
 		print(os.path.join('imgs', a), os.path.join('imgs', '0error', a))
