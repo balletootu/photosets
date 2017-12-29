@@ -1,7 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, requests, time, platform
+import os
+import requests
+import time
+import platform
+import datetime
+import subprocess
 import inspect
 from pyquery import PyQuery
 from requests.adapters import HTTPAdapter
@@ -116,3 +121,36 @@ def getMonth(english):
 	if english == 'Dec':
 		return 12
 	return english
+
+
+def runCmd(cmd, logfile='./aria2c.log', timeout=1200):
+	process = None
+	if logfile:
+		process = subprocess.Popen('%s >>%s 2>&1' % (cmd, logfile), shell=True)
+	else:
+		process = subprocess.Popen(cmd, shell=True)
+	# print(u'run cmd => %s' % cmd)
+	process.wait()
+	start = datetime.datetime.now()
+	while process.poll() is None:
+		time.sleep(0.1)
+		now = datetime.datetime.now()
+		if (now - start).seconds > timeout:
+			try:
+				process.terminate()
+			except Exception as e:
+				return None
+			return None
+	out = process.communicate()[0]
+	if process.stdin:
+		process.stdin.close()
+	if process.stdout:
+		process.stdout.close()
+	if process.stderr:
+		process.stderr.close()
+	try:
+		process.kill()
+	except OSError:
+		pass
+	return out
+		
