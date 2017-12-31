@@ -12,11 +12,11 @@ def main():
             if dirname.startswith('Met-Art'):
                 path = os.path.join(parent, dirname).replace(' ', '\ ')
                 if os.path.exists('%s/aria2c.log' % path.replace('\ ', ' ')):
-                    helper.runCmd('cd .. && mv %s /Users/eddie104/Documents/hongjie/photosets/imgs/0uploaded/MetArt/' % path, None)
+                    helper.runCmd('cd .. && mv %s /Users/eddie104/Documents/hongjie/photosets/imgs/0uploaded/MetArt/tmp.' % path, None)
                     continue
                 print('start => %s' % path)
                 helper.runCmd('cd %s && aria2c -i %s/url.txt' % (path, path))
-                helper.runCmd('cd .. && mv %s /Users/eddie104/Documents/hongjie/photosets/imgs/0uploaded/MetArt/' % path, None)
+                helper.runCmd('cd .. && mv %s /Users/eddie104/Documents/hongjie/photosets/imgs/0uploaded/MetArt/tmp/' % path, None)
                 print('end => %s' % path)
 if __name__ == '__main__':
     main()
