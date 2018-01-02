@@ -9,7 +9,7 @@ def main():
         for dirname in dirnames:
             if '0baidu' in parent or '0error' in parent or '0upload' in parent or '0nas' in parent:
                 continue
-            if dirname.startswith('Met-Art'):
+            if dirname.startswith('MetArt'):
                 path = os.path.join(parent, dirname).replace(' ', '\ ')
                 if os.path.exists('%s/aria2c.log' % path.replace('\ ', ' ')):
                     helper.runCmd('cd .. && mv %s /Users/eddie104/Documents/hongjie/photosets/imgs/0uploaded/MetArt/tmp.' % path, None)
