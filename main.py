@@ -90,6 +90,11 @@ def fetchGallery(url, page):
 	if os.path.exists(dirName):
 		print('exists!!! skip!')
 		return True
+	dirName = os.path.join('imgs', '0nas', 'MetArtX', title)
+	dirName = filterDirName(dirName)
+	if os.path.exists(dirName):
+		print('exists!!! skip!')
+		return True
 	dirName = os.path.join('imgs', '0error', title)
 	dirName = filterDirName(dirName)
 	if os.path.exists(dirName):
