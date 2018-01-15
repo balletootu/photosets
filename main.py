@@ -5,7 +5,7 @@ import helper
 import re, os
 
 BASE_URL = 'http://adultphotosets.ru'
-enalbed = True
+enalbed = False
 
 def fetchLargeImageUrl(imgUrl, tag):
 	if not imgUrl.endswith('zip'):
@@ -166,7 +166,7 @@ def fetchPage(page):
 	for a in pq('h2 > a'):
 		url = a.get('href')
 		if not enalbed:
-			if url == 'http://adultphotosets.ru/rylskyart-leila-sisakk/':
+			if url == 'http://adultphotosets.ru/watch4beauty-ariela-so-here-i-am/':
 				enalbed = True
 		if enalbed:
 			if not fetchGallery(url, page):
