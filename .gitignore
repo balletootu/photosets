@@ -15,6 +15,7 @@ npm-debug.log
 *.zip
 *.jpg
 *.log
+*.aria2
 
 ./animezilla/
 ./eternaldesire/
