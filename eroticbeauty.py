@@ -108,5 +108,5 @@ def main(chat_index=0, enabled=False):
 
 
 if __name__ == '__main__':
-    main(0, True)
+    main(9, True)
     # fetch_model('https://www.metart.com/model/lorian/', 'Lorian', '')
